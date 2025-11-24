@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Rehab: Relapse Edition</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Background Container -->
+    <div id="background-container" class="background">
+        <img id="bg-image" src="assets/backgrounds/bg_main_alley.png" alt="Toxic Alley Background">
+    </div>
+
+    <!-- Game Container -->
+    <div id="game-container">
+
+        <!-- Header -->
+        <header class="game-header">
+            <h1 class="game-title">POCKET REHAB: <span class="relapse">RELAPSE EDITION</span></h1>
+        </header>
+
+        <!-- Main Game Area -->
+        <div class="game-main">
+
+            <!-- Left Side - Tolerance Meter -->
+            <div class="left-panel">
+                <div id="vomit-button" class="vomit-btn">xVOMIT</div>
+                <div class="tolerance-meter">
+                    <img src="assets/ui/ui_meter_glass.png" alt="Tolerance Meter" class="meter-glass">
+                    <div id="meter-fill" class="meter-fill"></div>
+                    <div id="meter-bubbles" class="meter-bubbles"></div>
+                </div>
+                <div class="meter-label">TOLERANCE<br>METER</div>
+            </div>
+
+            <!-- Center - Game Grid -->
+            <div class="game-grid-container">
+                <img src="assets/ui/ui_container_grid_6x5.png" alt="Grid Frame" class="grid-frame">
+                <div id="game-grid" class="game-grid">
+                    <!-- 6x5 Grid - 30 cells -->
+                    <!-- Generated dynamically by JS -->
+                </div>
+            </div>
+
+            <!-- Right Side - Info Panel (Optional) -->
+            <div class="right-panel">
+                <!-- Can add info or effects here -->
+            </div>
+        </div>
+
+        <!-- Bottom Control Panel -->
+        <div class="control-panel">
+            <img src="assets/ui/ui_panel_betwin.png" alt="Control Panel" class="panel-bg">
+
+            <div class="controls-wrapper">
+                <!-- Info Button -->
+                <button id="info-btn" class="control-btn info-btn">i</button>
+
+                <!-- Balance Display -->
+                <div class="balance-container">
+                    <div class="label">BALANCE:</div>
+                    <div id="balance" class="value">5000</div>
+                </div>
+
+                <!-- Bet Button -->
+                <button id="bet-btn" class="control-btn bet-btn">BET</button>
+
+                <!-- Spin Button -->
+                <button id="spin-btn" class="spin-button">
+                    <img src="assets/ui/ui_btn_spin.png" alt="Spin">
+                    <span class="spin-text">SPIN</span>
+                </button>
+
+                <!-- Win Display -->
+                <div class="win-container">
+                    <div class="label">WIN:</div>
+                    <div id="win-amount" class="value">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Warning -->
+        <footer class="game-footer">
+            MATURE CONTENT - 18+ ONLY - DARK HUMOR INSIDE
+        </footer>
+    </div>
+
+    <!-- Bonus Buy Menu (Hidden by default) -->
+    <div id="bonus-buy-menu" class="bonus-menu hidden">
+        <img src="assets/ui/ui_panel_bonusbuy.png" alt="Bonus Buy Menu" class="menu-bg">
+        <div class="menu-content">
+            <h2>BONUS BUY</h2>
+            <button class="bonus-option" data-cost="100" data-type="catch">
+                <span class="bonus-name">Catch 'Em... If You Can</span>
+                <span class="bonus-cost">100x Bet</span>
+            </button>
+            <button class="bonus-option" data-cost="200" data-type="beatdown">
+                <span class="bonus-name">Alleyway Beatdown</span>
+                <span class="bonus-cost">200x Bet</span>
+            </button>
+            <button class="bonus-option" data-cost="500" data-type="detox">
+                <span class="bonus-name">Detox Ward (Free Spins)</span>
+                <span class="bonus-cost">500x Bet</span>
+            </button>
+            <button id="close-bonus-menu" class="close-btn">CLOSE</button>
+        </div>
+    </div>
+
+    <!-- Bonus Game Screens -->
+    <div id="bonus-catch" class="bonus-screen hidden">
+        <img src="assets/backgrounds/bg_bonus_field.png" alt="Catch Em Background" class="bonus-bg">
+        <div class="bonus-content">
+            <h2>CATCH 'EM... IF YOU CAN</h2>
+            <div class="bonus-stats">
+                <div>Lives: <span id="catch-lives">3</span></div>
+                <div>Total Win: <span id="catch-win">0</span></div>
+            </div>
+            <div id="catch-reels" class="catch-reels">
+                <div class="catch-reel">
+                    <div class="reel-label">WEAPON</div>
+                    <div id="weapon-reel" class="reel-symbol"></div>
+                </div>
+                <div class="catch-reel">
+                    <div class="reel-label">POWER</div>
+                    <div id="power-reel" class="reel-symbol"></div>
+                </div>
+                <div class="catch-reel">
+                    <div class="reel-label">ACCURACY</div>
+                    <div id="accuracy-reel" class="reel-symbol"></div>
+                </div>
+            </div>
+            <button id="catch-spin" class="bonus-spin-btn">THROW</button>
+            <button id="catch-exit" class="bonus-exit-btn">EXIT</button>
+        </div>
+    </div>
+
+    <div id="bonus-beatdown" class="bonus-screen hidden">
+        <img src="assets/backgrounds/bg_bonus_cage.png" alt="Fight Club Background" class="bonus-bg">
+        <div class="bonus-content">
+            <h2>ALLEYWAY BEATDOWN</h2>
+            <div class="boss-container">
+                <div class="boss-info">
+                    <div>Boss HP: <span id="boss-hp">100</span></div>
+                    <div class="boss-hp-bar">
+                        <div id="boss-hp-fill" class="hp-fill"></div>
+                    </div>
+                </div>
+                <div id="boss-sprite" class="boss-sprite"></div>
+            </div>
+            <div class="bonus-stats">
+                <div>Spins Left: <span id="beatdown-spins">5</span></div>
+                <div>Total Win: <span id="beatdown-win">0</span></div>
+            </div>
+            <div id="beatdown-result" class="beatdown-result"></div>
+            <button id="beatdown-spin" class="bonus-spin-btn">FIGHT</button>
+            <button id="beatdown-exit" class="bonus-exit-btn">EXIT</button>
+        </div>
+    </div>
+
+    <!-- Win Popup -->
+    <div id="win-popup" class="win-popup hidden">
+        <div class="win-popup-content">
+            <h2>BIG WIN!</h2>
+            <div id="popup-win-amount" class="popup-amount">0</div>
+            <button id="close-popup" class="popup-close-btn">COLLECT</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/bonus.js"></script>
+</body>
+</html>
