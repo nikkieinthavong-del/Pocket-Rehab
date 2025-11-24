@@ -121,6 +121,7 @@ class SlotGame {
         }
 
         this.isSpinning = true;
+        this.disableButtons();
         this.balance -= this.currentBet;
         this.currentWin = 0;
         this.scatterCount = 0;
@@ -144,6 +145,21 @@ class SlotGame {
         await this.checkWins();
 
         this.isSpinning = false;
+        this.enableButtons();
+    }
+
+    disableButtons() {
+        document.getElementById('spin-btn').disabled = true;
+        document.getElementById('bet-btn').disabled = true;
+        document.getElementById('vomit-button').style.pointerEvents = 'none';
+        document.getElementById('vomit-button').style.opacity = '0.5';
+    }
+
+    enableButtons() {
+        document.getElementById('spin-btn').disabled = false;
+        document.getElementById('bet-btn').disabled = false;
+        document.getElementById('vomit-button').style.pointerEvents = 'auto';
+        document.getElementById('vomit-button').style.opacity = '1';
     }
 
     async checkWins() {
@@ -212,30 +228,81 @@ class SlotGame {
     findClusters() {
         const clusters = [];
         const visited = new Set();
-        const symbolGroups = {};
 
-        // Group cells by symbol
-        this.grid.forEach((cell, index) => {
-            if (cell.symbol && cell.symbol !== 'SCATTER') {
-                if (!symbolGroups[cell.symbol]) {
-                    symbolGroups[cell.symbol] = [];
+        // Helper function to get adjacent cells
+        const getAdjacent = (index) => {
+            const row = Math.floor(index / CONFIG.GRID.COLS);
+            const col = index % CONFIG.GRID.COLS;
+            const adjacent = [];
+
+            // Up
+            if (row > 0) adjacent.push(index - CONFIG.GRID.COLS);
+            // Down
+            if (row < CONFIG.GRID.ROWS - 1) adjacent.push(index + CONFIG.GRID.COLS);
+            // Left
+            if (col > 0) adjacent.push(index - 1);
+            // Right
+            if (col < CONFIG.GRID.COLS - 1) adjacent.push(index + 1);
+
+            return adjacent;
+        };
+
+        // Flood fill to find connected clusters
+        const floodFill = (startIndex, targetSymbol) => {
+            const cluster = [];
+            const queue = [startIndex];
+            const localVisited = new Set();
+
+            while (queue.length > 0) {
+                const current = queue.shift();
+
+                if (localVisited.has(current)) continue;
+                localVisited.add(current);
+
+                const cell = this.grid[current];
+
+                // Check if cell matches target symbol or is wild
+                if (cell.symbol === targetSymbol || cell.symbol === 'WILD') {
+                    cluster.push(current);
+                    visited.add(current);
+
+                    // Add adjacent cells to queue
+                    getAdjacent(current).forEach(adjIndex => {
+                        if (!localVisited.has(adjIndex)) {
+                            queue.push(adjIndex);
+                        }
+                    });
                 }
-                symbolGroups[cell.symbol].push(index);
             }
-        });
 
-        // Check each symbol group
-        Object.keys(symbolGroups).forEach(symbol => {
-            const cells = symbolGroups[symbol];
+            return cluster;
+        };
 
-            // Include wilds in the count
-            const wildCells = symbolGroups['WILD'] || [];
-            const totalCells = [...cells, ...wildCells];
+        // Check each cell for clusters
+        this.grid.forEach((cell, index) => {
+            if (visited.has(index)) return;
+            if (!cell.symbol || cell.symbol === 'SCATTER') return;
 
-            if (totalCells.length >= CONFIG.MECHANICS.MIN_CLUSTER) {
+            // Start flood fill from this cell
+            const cluster = floodFill(index, cell.symbol);
+
+            // Only add if cluster meets minimum size
+            if (cluster.length >= CONFIG.MECHANICS.MIN_CLUSTER) {
+                // Determine the actual paying symbol (not WILD)
+                let payingSymbol = cell.symbol;
+                if (payingSymbol === 'WILD') {
+                    // Find a non-wild symbol in the cluster
+                    for (let cellIndex of cluster) {
+                        if (this.grid[cellIndex].symbol !== 'WILD') {
+                            payingSymbol = this.grid[cellIndex].symbol;
+                            break;
+                        }
+                    }
+                }
+
                 clusters.push({
-                    symbol: symbol,
-                    cells: totalCells
+                    symbol: payingSymbol,
+                    cells: cluster
                 });
             }
         });

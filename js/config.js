@@ -64,7 +64,7 @@ const CONFIG = {
             name: 'Can',
             type: 'low',
             image: 'assets/symbols/sym_low_can.png',
-            pays: { 8: 2, 10: 5, 12: 10, 15: 20, 50 }
+            pays: { 8: 2, 10: 5, 12: 10, 15: 20, 20: 50 }
         },
 
         // Special Symbols

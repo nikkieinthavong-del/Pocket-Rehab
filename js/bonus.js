@@ -250,8 +250,15 @@ function startDetoxWardBonus(gameInstance) {
             return;
         }
 
+        // Deduct the bet from balance for free spin display (will be refunded)
+        const originalBalance = gameInstance.balance;
+
         // Auto spin
         await gameInstance.spin();
+
+        // Refund the bet (it's a free spin)
+        gameInstance.balance = originalBalance;
+        gameInstance.updateUI();
 
         freeSpins--;
 
@@ -271,7 +278,7 @@ function startDetoxWardBonus(gameInstance) {
 
         // Continue if spins remain
         if (freeSpins > 0) {
-            setTimeout(runFreeSpin, 1000);
+            setTimeout(() => runFreeSpin(), 1500);
         } else {
             endBonus();
         }
