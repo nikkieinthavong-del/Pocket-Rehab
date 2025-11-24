@@ -196,10 +196,16 @@ class SlotGame {
                 this.currentWin += totalWin;
                 this.updateWin();
 
-                // Highlight winning cells
-                winningCells.forEach(index => {
-                    this.grid[index].element.classList.add('winning');
-                });
+                // Animate winning cells
+                const winningElements = Array.from(winningCells).map(idx => this.grid[idx].element);
+                const isHugeWin = totalWin >= this.currentBet * 20;
+
+                if (typeof animationController !== 'undefined') {
+                    animationController.animateWin(winningElements, isHugeWin);
+                } else {
+                    // Fallback if animation system not loaded
+                    winningElements.forEach(el => el.classList.add('winning'));
+                }
 
                 await this.delay(CONFIG.ANIMATION.WIN_FLASH_DURATION);
 
@@ -343,12 +349,38 @@ class SlotGame {
             }
         });
 
+        // Animate infections
+        if (newInfected.size > 0 && typeof animationController !== 'undefined') {
+            const infectedElements = Array.from(newInfected).map(idx => this.grid[idx].element);
+            animationController.animateInfection(infectedElements);
+        }
+
+        // Animate mutations
+        if (newMutated.size > 0 && typeof animationController !== 'undefined') {
+            const mutatedElements = Array.from(newMutated).map(idx => this.grid[idx].element);
+            animationController.animateMutation(mutatedElements);
+        }
+
+        // Animate crashes
+        if (crashed.size > 0 && typeof animationController !== 'undefined') {
+            const crashedElements = Array.from(crashed).map(idx => this.grid[idx].element);
+            animationController.animateCrash(crashedElements);
+        }
+
         this.infectedCells = newInfected;
 
         await this.delay(500);
     }
 
     async cascade(removedCells) {
+        // Animate removal
+        const removedElements = Array.from(removedCells).map(idx => this.grid[idx].element);
+        if (typeof animationController !== 'undefined') {
+            animationController.animateRemoval(removedElements);
+        }
+
+        await this.delay(300);
+
         // Remove symbols from winning cells
         removedCells.forEach(index => {
             this.grid[index].element.classList.remove('winning', 'infected');
@@ -386,13 +418,19 @@ class SlotGame {
 
     checkScatters() {
         this.scatterCount = 0;
-        this.grid.forEach(cell => {
+        const scatterCells = [];
+        this.grid.forEach((cell, index) => {
             if (cell.symbol === 'SCATTER') {
                 this.scatterCount++;
+                scatterCells.push(cell.element);
             }
         });
 
         if (this.scatterCount >= 3) {
+            // Animate scatter trigger
+            if (typeof animationController !== 'undefined') {
+                animationController.animateScatter(scatterCells);
+            }
             this.triggerBonus();
         }
     }
@@ -470,6 +508,11 @@ class SlotGame {
         const amount = document.getElementById('popup-win-amount');
         amount.textContent = this.currentWin.toFixed(2);
         popup.classList.remove('hidden');
+
+        // Trigger big win celebration
+        if (typeof animationController !== 'undefined') {
+            animationController.triggerBigWinCelebration();
+        }
 
         document.getElementById('close-popup').onclick = () => {
             popup.classList.add('hidden');

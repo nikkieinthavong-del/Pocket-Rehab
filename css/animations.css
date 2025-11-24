@@ -1,0 +1,621 @@
+/*
+ * POCKET REHAB: RELAPSE EDITION - ANIMATIONS
+ * Advanced animation effects for the slot game
+ */
+
+/* ==================== SYMBOL ANIMATIONS ==================== */
+
+/* Enhanced Spinning Animation */
+@keyframes symbolSpin {
+    0% {
+        transform: translateY(0) rotateX(0deg);
+        opacity: 1;
+    }
+    25% {
+        transform: translateY(-20px) rotateX(90deg);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateY(-40px) rotateX(180deg);
+        opacity: 0.4;
+    }
+    75% {
+        transform: translateY(-20px) rotateX(270deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(0) rotateX(360deg);
+        opacity: 1;
+    }
+}
+
+.grid-cell.spinning img {
+    animation: symbolSpin 0.3s ease-in-out;
+}
+
+/* Symbol Landing Animation */
+@keyframes symbolLand {
+    0% {
+        transform: translateY(-100px) scale(0.8);
+        opacity: 0;
+    }
+    60% {
+        transform: translateY(5px) scale(1.05);
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(-2px) scale(0.98);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.grid-cell.landing img {
+    animation: symbolLand 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Enhanced Win Pulse Animation */
+@keyframes winPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00;
+        filter: brightness(1);
+    }
+    25% {
+        transform: scale(1.08) rotate(2deg);
+        box-shadow: 0 0 20px #ffff00, 0 0 40px #ffff00, 0 0 60px #ff9900;
+        filter: brightness(1.3);
+    }
+    50% {
+        transform: scale(1.15);
+        box-shadow: 0 0 30px #ffff00, 0 0 60px #ffff00, 0 0 80px #ff9900;
+        filter: brightness(1.5);
+    }
+    75% {
+        transform: scale(1.08) rotate(-2deg);
+        box-shadow: 0 0 20px #ffff00, 0 0 40px #ffff00, 0 0 60px #ff9900;
+        filter: brightness(1.3);
+    }
+}
+
+.grid-cell.winning {
+    animation: winPulse 0.6s ease-in-out infinite;
+    z-index: 10;
+}
+
+.grid-cell.winning img {
+    filter: drop-shadow(0 0 10px #ffff00);
+}
+
+/* Symbol Disappear Animation */
+@keyframes symbolDisappear {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2) rotate(180deg);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(0) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.grid-cell.disappearing img {
+    animation: symbolDisappear 0.3s ease-out forwards;
+}
+
+/* ==================== INFECTION ANIMATIONS ==================== */
+
+/* Infection Spread Effect */
+@keyframes infectionSpread {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+        background: rgba(0, 255, 0, 0);
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.8;
+        background: rgba(0, 255, 0, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.4;
+        background: rgba(0, 255, 0, 0.3);
+    }
+}
+
+.grid-cell.infecting .infection-overlay {
+    animation: infectionSpread 0.5s ease-out;
+}
+
+/* Pulsing Infection Glow */
+@keyframes infectionPulse {
+    0%, 100% {
+        box-shadow: 0 0 10px #00ff00, inset 0 0 20px rgba(0, 255, 0, 0.3);
+        border-color: #00ff00;
+    }
+    50% {
+        box-shadow: 0 0 25px #00ff00, 0 0 40px #88ff00, inset 0 0 30px rgba(0, 255, 0, 0.5);
+        border-color: #88ff00;
+    }
+}
+
+.grid-cell.infected {
+    animation: infectionPulse 1.5s ease-in-out infinite;
+}
+
+/* Mutation Transform Animation */
+@keyframes mutationTransform {
+    0% {
+        transform: scale(1);
+        filter: hue-rotate(0deg) brightness(1);
+    }
+    25% {
+        transform: scale(0.8) rotate(-15deg);
+        filter: hue-rotate(60deg) brightness(1.5);
+    }
+    50% {
+        transform: scale(1.3) rotate(15deg);
+        filter: hue-rotate(120deg) brightness(2);
+        box-shadow: 0 0 50px #00ff00;
+    }
+    75% {
+        transform: scale(0.9) rotate(-10deg);
+        filter: hue-rotate(180deg) brightness(1.5);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        filter: hue-rotate(0deg) brightness(1);
+    }
+}
+
+.grid-cell.mutating {
+    animation: mutationTransform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* Crash/Multiplier Explosion */
+@keyframes multiplierCrash {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    20% {
+        transform: scale(1.5);
+        opacity: 0.8;
+    }
+    40% {
+        transform: scale(0.5);
+        opacity: 0.6;
+    }
+    60% {
+        transform: scale(2);
+        opacity: 0.4;
+    }
+    80% {
+        transform: scale(0.8);
+        opacity: 0.2;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+.grid-cell.crashing::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #ff0000 0%, transparent 70%);
+    animation: multiplierCrash 0.6s ease-out;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* ==================== TOLERANCE METER ANIMATIONS ==================== */
+
+/* Bubbles Rising in Meter */
+@keyframes bubbleRise {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(-150px) scale(1);
+    }
+    100% {
+        transform: translateY(-300px) scale(0.3);
+        opacity: 0;
+    }
+}
+
+.meter-bubble {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+    border-radius: 50%;
+    bottom: 0;
+    animation: bubbleRise 3s ease-in infinite;
+}
+
+/* Meter Fill Animation */
+@keyframes meterFillPulse {
+    0%, 100% {
+        box-shadow: 0 0 10px #00ff00, inset 0 0 20px rgba(0, 255, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px #00ff00, 0 0 30px #88ff00, inset 0 0 30px rgba(0, 255, 0, 0.7);
+    }
+}
+
+.meter-fill {
+    animation: meterFillPulse 2s ease-in-out infinite;
+}
+
+/* Meter Overflow Effect */
+@keyframes meterOverflow {
+    0%, 100% {
+        filter: brightness(1);
+        transform: scaleY(1);
+    }
+    50% {
+        filter: brightness(1.5) saturate(1.5);
+        transform: scaleY(1.02);
+    }
+}
+
+.tolerance-meter.overflowing {
+    animation: meterOverflow 0.5s ease-in-out infinite;
+}
+
+/* ==================== BUTTON ANIMATIONS ==================== */
+
+/* Spin Button Glow */
+@keyframes spinGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 5px rgba(255, 204, 0, 0.5));
+        transform: scale(1);
+    }
+    50% {
+        filter: drop-shadow(0 0 20px rgba(255, 204, 0, 0.9));
+        transform: scale(1.05);
+    }
+}
+
+.spin-button:not(:disabled) {
+    animation: spinGlow 2s ease-in-out infinite;
+}
+
+/* Button Click Ripple Effect */
+@keyframes buttonRipple {
+    0% {
+        transform: scale(0);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.button-ripple {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    animation: buttonRipple 0.6s ease-out;
+    pointer-events: none;
+}
+
+/* Vomit Button Shake */
+@keyframes vomitShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+.vomit-btn:hover {
+    animation: vomitShake 0.5s ease-in-out;
+}
+
+/* ==================== WIN ANIMATIONS ==================== */
+
+/* Big Win Celebration */
+@keyframes bigWinCelebrate {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(10deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.win-popup-content {
+    animation: bigWinCelebrate 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* Win Amount Counter Animation */
+@keyframes winCounterPulse {
+    0%, 100% {
+        transform: scale(1);
+        color: #00ff00;
+        text-shadow: 0 0 20px #00ff00;
+    }
+    50% {
+        transform: scale(1.1);
+        color: #88ff00;
+        text-shadow: 0 0 40px #00ff00, 0 0 60px #88ff00;
+    }
+}
+
+.popup-amount {
+    animation: winCounterPulse 0.8s ease-in-out infinite;
+}
+
+/* ==================== BONUS GAME TRANSITIONS ==================== */
+
+/* Bonus Screen Entrance */
+@keyframes bonusEntrance {
+    0% {
+        transform: scale(0) rotateY(-180deg);
+        opacity: 0;
+        filter: blur(20px);
+    }
+    60% {
+        transform: scale(1.1) rotateY(20deg);
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        transform: scale(1) rotateY(0deg);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+.bonus-screen:not(.hidden) {
+    animation: bonusEntrance 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* Background Fade Transition */
+@keyframes backgroundFade {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+.background img {
+    animation: backgroundFade 0.5s ease-out;
+}
+
+/* Scatter Symbol Highlight */
+@keyframes scatterHighlight {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+        filter: brightness(1);
+    }
+    25% {
+        transform: scale(1.2) rotate(5deg);
+        filter: brightness(1.5) saturate(1.5);
+        box-shadow: 0 0 30px #ff00ff, 0 0 50px #ff00ff;
+    }
+    50% {
+        transform: scale(1.3) rotate(-5deg);
+        filter: brightness(2) saturate(2);
+        box-shadow: 0 0 40px #ff00ff, 0 0 70px #ff00ff;
+    }
+    75% {
+        transform: scale(1.2) rotate(5deg);
+        filter: brightness(1.5) saturate(1.5);
+        box-shadow: 0 0 30px #ff00ff, 0 0 50px #ff00ff;
+    }
+}
+
+.grid-cell.scatter-trigger {
+    animation: scatterHighlight 0.8s ease-in-out 3;
+}
+
+/* ==================== PARTICLE EFFECTS (CSS only) ==================== */
+
+/* Sparkle Effect */
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1) rotate(180deg);
+    }
+}
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.sparkle::before,
+.sparkle::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: inherit;
+}
+
+.sparkle::before {
+    animation: sparkle 1s ease-in-out infinite;
+}
+
+.sparkle::after {
+    animation: sparkle 1s ease-in-out infinite 0.5s;
+}
+
+/* Confetti Fall */
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    z-index: 200;
+}
+
+/* ==================== CASCADE ANIMATIONS ==================== */
+
+/* Symbol Drop Animation */
+@keyframes symbolDrop {
+    0% {
+        transform: translateY(-600px);
+        opacity: 0;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.grid-cell.dropping img {
+    animation: symbolDrop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Grid Shake on Big Win */
+@keyframes gridShake {
+    0%, 100% { transform: translate(0, 0); }
+    10%, 30%, 50%, 70%, 90% { transform: translate(-5px, -5px); }
+    20%, 40%, 60%, 80% { transform: translate(5px, 5px); }
+}
+
+.game-grid.big-win {
+    animation: gridShake 0.5s ease-in-out;
+}
+
+/* ==================== MULTIPLIER ANIMATIONS ==================== */
+
+/* Multiplier Pop-in */
+@keyframes multiplierPop {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.3) rotate(10deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.multiplier {
+    animation: multiplierPop 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* Multiplier Pulse */
+@keyframes multiplierPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 5px #ff0000;
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px #ff0000, 0 0 25px #ff4444;
+    }
+}
+
+.multiplier {
+    animation: multiplierPop 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+               multiplierPulse 1s ease-in-out infinite 0.4s;
+}
+
+/* ==================== UTILITY ANIMATIONS ==================== */
+
+/* Fade In */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Fade Out */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Slide Up */
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Slide Down */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ==================== PERFORMANCE OPTIMIZATIONS ==================== */
+
+/* Enable GPU acceleration for animated elements */
+.grid-cell,
+.spin-button,
+.win-popup,
+.bonus-screen,
+.multiplier,
+.infection-overlay {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
