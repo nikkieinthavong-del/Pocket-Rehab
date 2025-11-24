@@ -1,0 +1,516 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Game Container */
+.game-container {
+    width: 100%;
+    max-width: 1400px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Header */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background: linear-gradient(180deg, rgba(0, 255, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+    border: 2px solid #00ff00;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+}
+
+.logo h1 {
+    font-size: 2.5em;
+    color: #00ff00;
+    text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+    letter-spacing: 3px;
+}
+
+.logo .subtitle {
+    font-size: 1.2em;
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+    letter-spacing: 2px;
+}
+
+.header-info {
+    display: flex;
+    gap: 30px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #00ff88;
+    border-radius: 10px;
+}
+
+.info-item .label {
+    font-size: 0.8em;
+    color: #00ff88;
+    margin-bottom: 5px;
+}
+
+.info-item .value {
+    font-size: 1.5em;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #00ff88;
+    color: #00ff88;
+    font-size: 1.5em;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.icon-btn:hover {
+    background: #00ff88;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #00ff88;
+}
+
+/* Main Game Area */
+.game-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Slot Grid Container */
+.slot-grid-container {
+    position: relative;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(40, 40, 40, 0.9) 100%);
+    padding: 30px;
+    border: 4px solid #00ff00;
+    border-radius: 20px;
+    box-shadow:
+        0 0 50px rgba(0, 255, 0, 0.5),
+        inset 0 0 50px rgba(0, 255, 0, 0.1);
+}
+
+/* 6x5 Grid */
+.slot-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 10px;
+    width: 700px;
+    height: 600px;
+}
+
+.slot-cell {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border: 3px solid #00ff88;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.slot-cell:hover {
+    border-color: #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    transform: scale(1.05);
+}
+
+.slot-cell.winning {
+    animation: winPulse 0.5s infinite alternate;
+    border-color: #ffff00;
+    box-shadow: 0 0 30px rgba(255, 255, 0, 0.8);
+}
+
+@keyframes winPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+    }
+    100% {
+        transform: scale(1.1);
+        box-shadow: 0 0 40px rgba(255, 255, 0, 1);
+    }
+}
+
+.slot-cell.spinning {
+    animation: spin 0.5s linear;
+}
+
+@keyframes spin {
+    0% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-20px); opacity: 0.5; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.symbol {
+    width: 80%;
+    height: 80%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Win Overlay */
+.win-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 40px 60px;
+    border: 5px solid #ffff00;
+    border-radius: 20px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    animation: slideIn 0.5s;
+    z-index: 10;
+}
+
+.win-overlay.show {
+    display: flex;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, -150%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+.win-amount {
+    font-size: 3em;
+    color: #ffff00;
+    text-shadow: 0 0 30px #ffff00;
+    font-weight: bold;
+}
+
+.multiplier {
+    font-size: 2em;
+    color: #00ff00;
+    text-shadow: 0 0 20px #00ff00;
+}
+
+/* Bonus Panel Overlay */
+.bonus-panel-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    animation: fadeIn 0.5s;
+    z-index: 20;
+}
+
+.bonus-panel-overlay.show {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.bonus-panel-content img {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 30px rgba(0, 255, 0, 0.8));
+}
+
+/* Controls */
+.game-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 255, 0, 0.1) 100%);
+    border: 2px solid #00ff00;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+}
+
+.bet-controls, .auto-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.control-btn {
+    background: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
+    border: 2px solid #00ff00;
+    color: #000000;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 15px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+}
+
+.control-btn:hover {
+    background: linear-gradient(135deg, #00ffaa 0%, #00ee88 100%);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.8);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+.bet-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 30px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #00ff88;
+    border-radius: 10px;
+}
+
+.bet-display .label {
+    font-size: 0.9em;
+    color: #00ff88;
+}
+
+.bet-display .value {
+    font-size: 1.5em;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Spin Button */
+.spin-btn {
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+    border: 4px solid #ff6600;
+    color: #ffffff;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 30px 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.spin-btn:hover {
+    background: linear-gradient(135deg, #ff3333 0%, #ee0000 100%);
+    transform: scale(1.1);
+    box-shadow: 0 0 60px rgba(255, 0, 0, 0.9);
+}
+
+.spin-btn:active {
+    transform: scale(0.95);
+}
+
+.spin-btn:disabled {
+    background: linear-gradient(135deg, #666666 0%, #444444 100%);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border: 4px solid #00ff00;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #ff0000;
+    border: 2px solid #ff6600;
+    color: #ffffff;
+    font-size: 2em;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.close-btn:hover {
+    background: #ff3333;
+    transform: scale(1.1);
+}
+
+.modal-content h2 {
+    color: #00ff00;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    text-shadow: 0 0 20px #00ff00;
+}
+
+.modal-content h3 {
+    color: #00ff88;
+    margin: 20px 0 10px;
+    font-size: 1.5em;
+}
+
+.paytable-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(0, 255, 0, 0.05);
+    border: 2px solid #00ff88;
+    border-radius: 10px;
+}
+
+.paytable-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 10px 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+.multiplier-green {
+    color: #00ff00;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.multiplier-cyan {
+    color: #00ffff;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00ffff;
+}
+
+.multiplier-red {
+    color: #ff0000;
+    font-weight: bold;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+.paytable-section ul {
+    list-style-position: inside;
+    padding-left: 20px;
+}
+
+.paytable-section li {
+    margin: 8px 0;
+    color: #cccccc;
+}
+
+.paytable-section p {
+    color: #cccccc;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .slot-grid {
+        width: 600px;
+        height: 500px;
+    }
+
+    .logo h1 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        padding: 10px;
+    }
+
+    .slot-grid {
+        width: 400px;
+        height: 350px;
+        gap: 5px;
+    }
+
+    .game-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .header-info {
+        gap: 10px;
+    }
+
+    .game-controls {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .spin-btn {
+        padding: 20px 40px;
+        font-size: 1.5em;
+    }
+}
