@@ -1,0 +1,21 @@
+{
+  "name": "pocket-rehab-toxic-shock",
+  "version": "0.1.0",
+  "description": "POCKET REHAB: TOXIC SHOCK - High-Volatility Cluster Slot Game",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8080",
+    "dev": "npx http-server -p 8080 -o"
+  },
+  "keywords": [
+    "slot-game",
+    "cluster-pays",
+    "casino",
+    "game"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
