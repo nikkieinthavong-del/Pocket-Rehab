@@ -14,6 +14,12 @@ export class GameRenderer {
   private uiContainer: PIXI.Container;
   private symbolSprites: PIXI.Graphics[][] = [];
   private isSpinning: boolean = false;
+  
+  // UI element references
+  private balanceText!: PIXI.Text;
+  private betText!: PIXI.Text;
+  private winText!: PIXI.Text;
+  private freeSpinsText?: PIXI.Text;
 
   constructor(engine: GameEngine) {
     this.engine = engine;
@@ -76,7 +82,7 @@ export class GameRenderer {
     const state = this.engine.getState();
 
     // Balance text
-    const balanceText = new PIXI.Text({
+    this.balanceText = new PIXI.Text({
       text: `Balance: $${state.balance.toFixed(2)}`,
       style: {
         fontFamily: 'Arial',
@@ -84,12 +90,12 @@ export class GameRenderer {
         fill: 0xffffff,
       },
     });
-    balanceText.x = 20;
-    balanceText.y = 20;
-    this.uiContainer.addChild(balanceText);
+    this.balanceText.x = 20;
+    this.balanceText.y = 20;
+    this.uiContainer.addChild(this.balanceText);
 
     // Bet text
-    const betText = new PIXI.Text({
+    this.betText = new PIXI.Text({
       text: `Bet: $${state.bet}`,
       style: {
         fontFamily: 'Arial',
@@ -97,9 +103,9 @@ export class GameRenderer {
         fill: 0xffff00,
       },
     });
-    betText.x = 20;
-    betText.y = 50;
-    this.uiContainer.addChild(betText);
+    this.betText.x = 20;
+    this.betText.y = 50;
+    this.uiContainer.addChild(this.betText);
 
     // Spin button
     const spinButton = new PIXI.Graphics();
@@ -127,7 +133,7 @@ export class GameRenderer {
     this.uiContainer.addChild(spinText);
 
     // Win text
-    const winText = new PIXI.Text({
+    this.winText = new PIXI.Text({
       text: `Win: $${state.totalWin.toFixed(2)}`,
       style: {
         fontFamily: 'Arial',
@@ -136,10 +142,10 @@ export class GameRenderer {
         fontWeight: 'bold',
       },
     });
-    winText.x = this.app.screen.width / 2;
-    winText.y = 20;
-    winText.anchor.set(0.5, 0);
-    this.uiContainer.addChild(winText);
+    this.winText.x = this.app.screen.width / 2;
+    this.winText.y = 20;
+    this.winText.anchor.set(0.5, 0);
+    this.uiContainer.addChild(this.winText);
   }
 
   /**
@@ -251,37 +257,34 @@ export class GameRenderer {
     const state = this.engine.getState();
     
     // Update balance
-    const balanceText = this.uiContainer.children[0] as PIXI.Text;
-    balanceText.text = `Balance: $${state.balance.toFixed(2)}`;
+    this.balanceText.text = `Balance: $${state.balance.toFixed(2)}`;
 
     // Update win
-    const winText = this.uiContainer.children[3] as PIXI.Text;
-    winText.text = `Win: $${state.totalWin.toFixed(2)}`;
+    this.winText.text = `Win: $${state.totalWin.toFixed(2)}`;
 
     // Show free spins
     if (state.freeSpinsRemaining > 0) {
-      const fsText = new PIXI.Text({
-        text: `Free Spins: ${state.freeSpinsRemaining}`,
-        style: {
-          fontFamily: 'Arial',
-          fontSize: 24,
-          fill: 0xff00ff,
-          fontWeight: 'bold',
-        },
-      });
-      fsText.x = this.app.screen.width / 2;
-      fsText.y = 60;
-      fsText.anchor.set(0.5, 0);
-      
-      // Remove old free spins text if exists
-      const oldFsText = this.uiContainer.children.find((child: any) => 
-        child instanceof PIXI.Text && child.text.startsWith('Free Spins:')
-      );
-      if (oldFsText) {
-        this.uiContainer.removeChild(oldFsText);
+      if (!this.freeSpinsText) {
+        this.freeSpinsText = new PIXI.Text({
+          text: `Free Spins: ${state.freeSpinsRemaining}`,
+          style: {
+            fontFamily: 'Arial',
+            fontSize: 24,
+            fill: 0xff00ff,
+            fontWeight: 'bold',
+          },
+        });
+        this.freeSpinsText.x = this.app.screen.width / 2;
+        this.freeSpinsText.y = 60;
+        this.freeSpinsText.anchor.set(0.5, 0);
+        this.uiContainer.addChild(this.freeSpinsText);
+      } else {
+        this.freeSpinsText.text = `Free Spins: ${state.freeSpinsRemaining}`;
       }
-      
-      this.uiContainer.addChild(fsText);
+    } else if (this.freeSpinsText) {
+      // Remove free spins text if no longer in free spins mode
+      this.uiContainer.removeChild(this.freeSpinsText);
+      this.freeSpinsText = undefined;
     }
   }
 

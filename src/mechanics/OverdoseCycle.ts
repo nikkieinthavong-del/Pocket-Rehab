@@ -87,7 +87,7 @@ export class OverdoseCycleMechanic {
         
         // Only remove non-sticky symbols or exploded symbols
         if (gridSymbol && (!gridSymbol.isSticky || gridSymbol.overdoseStage === OverdoseStage.EXPLODED)) {
-          updatedGrid[symbol.position.row][symbol.position.col] = null as any;
+          updatedGrid[symbol.position.row][symbol.position.col] = null!;
         }
       }
     }
