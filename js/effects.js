@@ -482,10 +482,15 @@ window.addEventListener('DOMContentLoaded', () => {
     particleSystem = new ParticleSystem();
     animationController = new AnimationController(particleSystem);
 
+    // Expose globally
+    window.particleSystem = particleSystem;
+    window.animationController = animationController;
+
     const meterBubbles = document.getElementById('meter-bubbles');
     if (meterBubbles) {
         bubbleSystem = new BubbleSystem(meterBubbles);
         bubbleSystem.start();
+        window.bubbleSystem = bubbleSystem;
     }
 
     // Add ripple effect to all buttons

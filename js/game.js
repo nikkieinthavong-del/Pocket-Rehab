@@ -122,6 +122,7 @@ class SlotGame {
 
         this.isSpinning = true;
         this.disableButtons();
+        const betAmount = this.currentBet;
         this.balance -= this.currentBet;
         this.currentWin = 0;
         this.scatterCount = 0;
@@ -143,6 +144,22 @@ class SlotGame {
 
         // Check for wins
         await this.checkWins();
+
+        // Record spin in stats
+        if (window.gameStats) {
+            window.gameStats.recordSpin(betAmount, this.currentWin);
+        }
+
+        // Update UI stats panel
+        if (window.uiManager && window.gameStats) {
+            window.uiManager.updateStats({
+                totalSpins: window.gameStats.stats.totalSpins,
+                totalWagered: window.gameStats.stats.totalWagered,
+                totalWon: window.gameStats.stats.totalWon,
+                biggestWin: window.gameStats.stats.biggestWin,
+                bonusTriggered: window.gameStats.stats.bonusesTriggered
+            });
+        }
 
         this.isSpinning = false;
         this.enableButtons();
@@ -546,4 +563,17 @@ class SlotGame {
 let game;
 window.addEventListener('DOMContentLoaded', () => {
     game = new SlotGame();
+    window.game = game;
+
+    // Initialize audio on first user interaction
+    const initAudio = () => {
+        if (window.audioManager) {
+            window.audioManager.init();
+        }
+        document.removeEventListener('click', initAudio);
+        document.removeEventListener('touchstart', initAudio);
+    };
+
+    document.addEventListener('click', initAudio);
+    document.addEventListener('touchstart', initAudio);
 });

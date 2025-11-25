@@ -120,22 +120,36 @@ class TurboMode {
         this.isActive = false;
     }
 
+    activate() {
+        if (this.isActive) return;
+        this.isActive = true;
+        CONFIG.ANIMATION.SPIN_DURATION = 150;
+        CONFIG.ANIMATION.WIN_FLASH_DURATION = 500;
+        CONFIG.ANIMATION.CASCADE_DELAY = 250;
+        this.updateUI();
+        this.saveState();
+    }
+
+    deactivate() {
+        if (!this.isActive) return;
+        this.isActive = false;
+        CONFIG.ANIMATION.SPIN_DURATION = 300;
+        CONFIG.ANIMATION.WIN_FLASH_DURATION = 1000;
+        CONFIG.ANIMATION.CASCADE_DELAY = 500;
+        this.updateUI();
+        this.saveState();
+    }
+
     toggle() {
         this.isActive = !this.isActive;
 
         // Adjust animation speeds
         if (this.isActive) {
-            CONFIG.ANIMATION.SPIN_DURATION = 150;
-            CONFIG.ANIMATION.WIN_FLASH_DURATION = 500;
-            CONFIG.ANIMATION.CASCADE_DELAY = 250;
+            this.activate();
         } else {
-            CONFIG.ANIMATION.SPIN_DURATION = 300;
-            CONFIG.ANIMATION.WIN_FLASH_DURATION = 1000;
-            CONFIG.ANIMATION.CASCADE_DELAY = 500;
+            this.deactivate();
         }
 
-        this.updateUI();
-        this.saveState();
         return this.isActive;
     }
 
@@ -462,6 +476,8 @@ let turboMode;
 let gameStats;
 let saveManager;
 let settingsManager;
+let saveLoadSystem;
+let statsTracker;
 
 window.addEventListener('DOMContentLoaded', () => {
     // Initialize systems
@@ -470,6 +486,40 @@ window.addEventListener('DOMContentLoaded', () => {
     saveManager = new SaveManager();
     settingsManager = new SettingsManager();
 
+    // Expose globally for UI manager
+    window.turboMode = turboMode;
+    window.gameStats = gameStats;
+    window.saveManager = saveManager;
+    window.settingsManager = settingsManager;
+
+    // Aliases for UI compatibility
+    window.saveLoadSystem = {
+        saveGame: () => {
+            if (window.game) {
+                saveManager.saveGame(window.game);
+                return true;
+            }
+            return false;
+        },
+        loadGame: () => {
+            if (window.game) {
+                return saveManager.loadGame(window.game);
+            }
+            return false;
+        }
+    };
+
+    window.statsTracker = {
+        reset: () => gameStats.reset(),
+        getStats: () => ({
+            totalSpins: gameStats.stats.totalSpins,
+            totalWagered: gameStats.stats.totalWagered,
+            totalWon: gameStats.stats.totalWon,
+            biggestWin: gameStats.stats.biggestWin,
+            bonusTriggered: gameStats.stats.bonusesTriggered
+        })
+    };
+
     // Enable mobile optimizations
     MobileDetector.enableMobileOptimizations();
 
@@ -477,6 +527,9 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         if (typeof game !== 'undefined') {
             autoPlayManager = new AutoPlayManager(game);
+            window.autoPlayManager = autoPlayManager;
+            window.game = game;
+
             gameStats.startSession(game.balance);
             saveManager.startAutosave(game);
 

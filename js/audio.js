@@ -344,12 +344,14 @@ class AudioManager {
 }
 
 // Create global audio manager
-let audioManager;
+let audioManager = new AudioManager();
+window.audioManager = audioManager;
 
 // Initialize on first user interaction
 function initAudio() {
     if (!audioManager) {
         audioManager = new AudioManager();
+        window.audioManager = audioManager;
     }
     if (!audioManager.initialized) {
         audioManager.init();
