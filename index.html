@@ -168,11 +168,305 @@
         </div>
     </div>
 
+    <!-- Settings Menu -->
+    <div id="settings-menu" class="modal-overlay hidden">
+        <div class="modal-content settings-modal">
+            <h2>⚙️ SETTINGS</h2>
+
+            <!-- Auto-Play Section -->
+            <div class="settings-section">
+                <h3>AUTO-PLAY</h3>
+                <div class="setting-row">
+                    <label>Number of Spins:</label>
+                    <select id="autoplay-spins">
+                        <option value="10">10 Spins</option>
+                        <option value="25">25 Spins</option>
+                        <option value="50">50 Spins</option>
+                        <option value="100">100 Spins</option>
+                        <option value="250">250 Spins</option>
+                        <option value="500">500 Spins</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="autoplay-stop-win" class="checkbox">
+                        Stop on Any Win
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="autoplay-stop-bigwin" class="checkbox">
+                        Stop on Big Win (10x+)
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="autoplay-stop-bonus" class="checkbox">
+                        Stop on Bonus Trigger
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label>Stop Loss:</label>
+                    <input type="number" id="autoplay-stoploss" placeholder="0" min="0" step="100">
+                </div>
+                <div class="setting-row">
+                    <label>Stop on Win:</label>
+                    <input type="number" id="autoplay-stopwin" placeholder="0" min="0" step="100">
+                </div>
+                <button id="start-autoplay" class="action-btn green">START AUTO-PLAY</button>
+                <button id="stop-autoplay" class="action-btn red">STOP AUTO-PLAY</button>
+                <div id="autoplay-status" class="status-display">Status: Inactive</div>
+            </div>
+
+            <!-- Sound Settings -->
+            <div class="settings-section">
+                <h3>SOUND</h3>
+                <div class="setting-row">
+                    <label>Master Volume:</label>
+                    <input type="range" id="master-volume" min="0" max="100" value="70">
+                    <span id="volume-value">70%</span>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="sound-effects" class="checkbox" checked>
+                        Sound Effects
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="background-music" class="checkbox" checked>
+                        Background Music
+                    </label>
+                </div>
+            </div>
+
+            <!-- Game Options -->
+            <div class="settings-section">
+                <h3>GAME OPTIONS</h3>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="turbo-mode" class="checkbox">
+                        🚀 Turbo Mode (Faster Spins)
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="quick-spin" class="checkbox">
+                        ⚡ Quick Spin (Skip Animations)
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="show-stats" class="checkbox" checked>
+                        📊 Show Statistics
+                    </label>
+                </div>
+            </div>
+
+            <!-- Save/Load -->
+            <div class="settings-section">
+                <h3>SAVE / LOAD</h3>
+                <button id="save-game" class="action-btn blue">💾 SAVE GAME</button>
+                <button id="load-game" class="action-btn blue">📁 LOAD GAME</button>
+                <button id="reset-game" class="action-btn red">🔄 RESET GAME</button>
+                <div id="save-status" class="status-display"></div>
+            </div>
+
+            <button id="close-settings" class="modal-close-btn">CLOSE</button>
+        </div>
+    </div>
+
+    <!-- Bet Selector Modal -->
+    <div id="bet-selector" class="modal-overlay hidden">
+        <div class="modal-content bet-modal">
+            <h2>SELECT BET AMOUNT</h2>
+            <div class="bet-grid">
+                <button class="bet-option" data-bet="1">$1</button>
+                <button class="bet-option" data-bet="2">$2</button>
+                <button class="bet-option" data-bet="5">$5</button>
+                <button class="bet-option" data-bet="10">$10</button>
+                <button class="bet-option" data-bet="20">$20</button>
+                <button class="bet-option" data-bet="50">$50</button>
+                <button class="bet-option" data-bet="100">$100</button>
+            </div>
+            <div class="current-bet-display">
+                Current Bet: $<span id="current-bet-value">1</span>
+            </div>
+            <button id="close-bet-selector" class="modal-close-btn">CLOSE</button>
+        </div>
+    </div>
+
+    <!-- Paytable/Info Modal -->
+    <div id="paytable-modal" class="modal-overlay hidden">
+        <div class="modal-content paytable-modal">
+            <h2>📖 PAYTABLE & RULES</h2>
+
+            <div class="paytable-section">
+                <h3>HIGH PAY SYMBOLS</h3>
+                <div class="symbol-grid">
+                    <div class="paytable-item">
+                        <img src="assets/characters/char_high_sparky.png" alt="Sparky">
+                        <div class="symbol-name">SPARKY</div>
+                        <div class="symbol-pays">
+                            8+ = 10x | 10+ = 20x<br>
+                            12+ = 50x | 15+ = 100x<br>
+                            20+ = 500x
+                        </div>
+                    </div>
+                    <div class="paytable-item">
+                        <img src="assets/characters/char_high_zippo.png" alt="Zippo">
+                        <div class="symbol-name">ZIPPO</div>
+                        <div class="symbol-pays">
+                            8+ = 10x | 10+ = 20x<br>
+                            12+ = 50x | 15+ = 100x<br>
+                            20+ = 500x
+                        </div>
+                    </div>
+                    <div class="paytable-item">
+                        <img src="assets/characters/char_high_squirt.png" alt="Squirt">
+                        <div class="symbol-name">SQUIRT</div>
+                        <div class="symbol-pays">
+                            8+ = 10x | 10+ = 20x<br>
+                            12+ = 50x | 15+ = 100x<br>
+                            20+ = 500x
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paytable-section">
+                <h3>LOW PAY SYMBOLS</h3>
+                <div class="symbol-grid compact">
+                    <div class="paytable-item small">
+                        <img src="assets/symbols/sym_low_fish.png" alt="Fish">
+                        <div class="symbol-name">FISH</div>
+                        <div class="symbol-pays">8+=2x | 12+=10x | 20+=50x</div>
+                    </div>
+                    <div class="paytable-item small">
+                        <img src="assets/symbols/sym_low_finger.png" alt="Finger">
+                        <div class="symbol-name">FINGER</div>
+                        <div class="symbol-pays">8+=2x | 12+=10x | 20+=50x</div>
+                    </div>
+                    <div class="paytable-item small">
+                        <img src="assets/symbols/sym_low_needle.png" alt="Needle">
+                        <div class="symbol-name">NEEDLE</div>
+                        <div class="symbol-pays">8+=2x | 12+=10x | 20+=50x</div>
+                    </div>
+                    <div class="paytable-item small">
+                        <img src="assets/symbols/sym_low_baggie.png" alt="Baggie">
+                        <div class="symbol-name">BAGGIE</div>
+                        <div class="symbol-pays">8+=2x | 12+=10x | 20+=50x</div>
+                    </div>
+                    <div class="paytable-item small">
+                        <img src="assets/symbols/sym_low_pills.png" alt="Pills">
+                        <div class="symbol-name">PILLS</div>
+                        <div class="symbol-pays">8+=2x | 12+=10x | 20+=50x</div>
+                    </div>
+                    <div class="paytable-item small">
+                        <img src="assets/symbols/sym_low_can.png" alt="Can">
+                        <div class="symbol-name">CAN</div>
+                        <div class="symbol-pays">8+=2x | 12+=10x | 20+=50x</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paytable-section">
+                <h3>SPECIAL SYMBOLS</h3>
+                <div class="symbol-grid">
+                    <div class="paytable-item">
+                        <img src="assets/specials/sym_special_wild.png" alt="Wild">
+                        <div class="symbol-name">WILD</div>
+                        <div class="symbol-pays">Substitutes for all symbols except Scatter</div>
+                    </div>
+                    <div class="paytable-item">
+                        <img src="assets/specials/sym_special_scatter.png" alt="Scatter">
+                        <div class="symbol-name">SCATTER</div>
+                        <div class="symbol-pays">
+                            3+ = Catch 'Em Bonus<br>
+                            4+ = Alleyway Beatdown<br>
+                            5+ = Detox Ward Free Spins
+                        </div>
+                    </div>
+                    <div class="paytable-item">
+                        <img src="assets/specials/sym_special_multiplier.png" alt="Multiplier">
+                        <div class="symbol-name">MULTIPLIER</div>
+                        <div class="symbol-pays">Doubles all wins in the cell</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paytable-section">
+                <h3>GAME RULES</h3>
+                <div class="rules-text">
+                    <p>• <strong>Cluster Pays:</strong> Win by landing 8+ matching symbols adjacent to each other</p>
+                    <p>• <strong>Cascade Feature:</strong> Winning symbols are removed, new symbols drop down</p>
+                    <p>• <strong>Tolerance Meter:</strong> Fills up with each win, triggers special effects</p>
+                    <p>• <strong>Overdose Cycle:</strong> Symbols can become infected, mutated, or crash</p>
+                    <p>• <strong>Bonus Buy:</strong> Click VOMIT button to purchase bonus features</p>
+                    <p>• <strong>Max Win:</strong> 50,000x your bet</p>
+                </div>
+            </div>
+
+            <button id="close-paytable" class="modal-close-btn">CLOSE</button>
+        </div>
+    </div>
+
+    <!-- Statistics Panel -->
+    <div id="stats-panel" class="stats-panel">
+        <div class="stats-header">
+            <h3>📊 STATS</h3>
+            <button id="toggle-stats" class="stats-toggle">▼</button>
+        </div>
+        <div id="stats-content" class="stats-content">
+            <div class="stat-item">
+                <span class="stat-label">Total Spins:</span>
+                <span id="stat-spins" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Total Wagered:</span>
+                <span id="stat-wagered" class="stat-value">$0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Total Won:</span>
+                <span id="stat-won" class="stat-value">$0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Biggest Win:</span>
+                <span id="stat-biggest" class="stat-value">$0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Bonus Triggered:</span>
+                <span id="stat-bonus" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">RTP:</span>
+                <span id="stat-rtp" class="stat-value">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Access Toolbar -->
+    <div class="quick-toolbar">
+        <button id="toolbar-settings" class="toolbar-btn" title="Settings">
+            <span class="toolbar-icon">⚙️</span>
+        </button>
+        <button id="toolbar-paytable" class="toolbar-btn" title="Paytable">
+            <span class="toolbar-icon">📖</span>
+        </button>
+        <button id="toolbar-stats" class="toolbar-btn" title="Statistics">
+            <span class="toolbar-icon">📊</span>
+        </button>
+        <button id="toolbar-mute" class="toolbar-btn" title="Mute">
+            <span class="toolbar-icon">🔊</span>
+        </button>
+    </div>
+
     <!-- Scripts -->
     <script src="js/config.js"></script>
     <script src="js/audio.js"></script>
     <script src="js/effects.js"></script>
     <script src="js/features.js"></script>
+    <script src="js/ui.js"></script>
     <script src="js/game.js"></script>
     <script src="js/bonus.js"></script>
 </body>
