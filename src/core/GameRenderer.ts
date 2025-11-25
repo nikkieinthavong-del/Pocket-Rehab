@@ -208,13 +208,15 @@ export class GameRenderer {
    */
   private getSymbolColor(type: SymbolType): number {
     const colors: Record<SymbolType, number> = {
-      [SymbolType.LOW1]: 0x4a4a4a,
-      [SymbolType.LOW2]: 0x5a5a5a,
-      [SymbolType.LOW3]: 0x6a6a6a,
-      [SymbolType.MED1]: 0x3498db,
-      [SymbolType.MED2]: 0x9b59b6,
-      [SymbolType.HIGH1]: 0xe74c3c,
-      [SymbolType.HIGH2]: 0xf39c12,
+      [SymbolType.FISH]: 0x4a4a4a,
+      [SymbolType.FINGER]: 0x5a5a5a,
+      [SymbolType.NEEDLE]: 0x6a6a6a,
+      [SymbolType.BAGGIE]: 0x7a7a7a,
+      [SymbolType.PILLS]: 0x8a8a8a,
+      [SymbolType.CAN]: 0x9a9a9a,
+      [SymbolType.SPARKY]: 0xe74c3c,
+      [SymbolType.ZIPPO]: 0xf39c12,
+      [SymbolType.SQUIRT]: 0x3498db,
       [SymbolType.WILD]: 0x2ecc71,
       [SymbolType.SCATTER]: 0xe67e22,
       [SymbolType.DOCTOR]: 0x1abc9c,

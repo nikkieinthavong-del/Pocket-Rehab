@@ -1,17 +1,25 @@
 /**
  * Symbol types in the game
+ * Based on Pocket Rehab: Toxic Shock design
  */
 export enum SymbolType {
-  LOW1 = 'LOW1',
-  LOW2 = 'LOW2',
-  LOW3 = 'LOW3',
-  MED1 = 'MED1',
-  MED2 = 'MED2',
-  HIGH1 = 'HIGH1',
-  HIGH2 = 'HIGH2',
-  WILD = 'WILD',
-  SCATTER = 'SCATTER',
-  DOCTOR = 'DOCTOR',
+  // Low Pay Symbols (Paraphernalia)
+  FISH = 'FISH',           // Skeleton Fish
+  FINGER = 'FINGER',       // Middle Finger
+  NEEDLE = 'NEEDLE',       // Syringe
+  BAGGIE = 'BAGGIE',       // Baggie
+  PILLS = 'PILLS',         // Spilled Pills
+  CAN = 'CAN',             // Crushed Can
+
+  // High Pay Symbols (The Addicts)
+  SPARKY = 'SPARKY',       // The Rat
+  ZIPPO = 'ZIPPO',         // The Lizard
+  SQUIRT = 'SQUIRT',       // The Turtle
+
+  // Special Symbols
+  WILD = 'WILD',           // Neon Puke Wild
+  SCATTER = 'SCATTER',     // Rejected Letter
+  DOCTOR = 'DOCTOR',       // The Doctor (resets multipliers in free spins)
 }
 
 /**

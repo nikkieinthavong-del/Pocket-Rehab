@@ -17,8 +17,8 @@ export function getWeightedRandomSymbol(weights: Record<SymbolType, number>): Sy
       return symbol as SymbolType;
     }
   }
-  
-  return SymbolType.LOW1;
+
+  return SymbolType.FISH; // Default fallback
 }
 
 /**

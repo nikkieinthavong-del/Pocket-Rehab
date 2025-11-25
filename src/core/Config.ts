@@ -11,14 +11,21 @@ export const CONFIG = {
   
   // Payouts (multiplier of bet per symbol in cluster)
   SYMBOL_PAYOUTS: {
-    [SymbolType.LOW1]: 0.1,
-    [SymbolType.LOW2]: 0.15,
-    [SymbolType.LOW3]: 0.2,
-    [SymbolType.MED1]: 0.3,
-    [SymbolType.MED2]: 0.5,
-    [SymbolType.HIGH1]: 1.0,
-    [SymbolType.HIGH2]: 2.0,
-    [SymbolType.WILD]: 2.0,
+    // Low Pay Symbols (Paraphernalia)
+    [SymbolType.FISH]: 0.1,
+    [SymbolType.FINGER]: 0.12,
+    [SymbolType.NEEDLE]: 0.15,
+    [SymbolType.BAGGIE]: 0.18,
+    [SymbolType.PILLS]: 0.2,
+    [SymbolType.CAN]: 0.25,
+
+    // High Pay Symbols (The Addicts)
+    [SymbolType.SPARKY]: 1.0,  // The Rat
+    [SymbolType.ZIPPO]: 1.5,   // The Lizard
+    [SymbolType.SQUIRT]: 2.0,  // The Turtle
+
+    // Special Symbols
+    [SymbolType.WILD]: 2.5,
   } as Record<SymbolType, number>,
   
   // Multipliers
@@ -33,25 +40,34 @@ export const CONFIG = {
   
   // Symbol weights for reel generation (higher = more common)
   SYMBOL_WEIGHTS: {
-    [SymbolType.LOW1]: 20,
-    [SymbolType.LOW2]: 18,
-    [SymbolType.LOW3]: 16,
-    [SymbolType.MED1]: 14,
-    [SymbolType.MED2]: 12,
-    [SymbolType.HIGH1]: 8,
-    [SymbolType.HIGH2]: 6,
+    // Low Pay Symbols (more common)
+    [SymbolType.FISH]: 20,
+    [SymbolType.FINGER]: 18,
+    [SymbolType.NEEDLE]: 16,
+    [SymbolType.BAGGIE]: 15,
+    [SymbolType.PILLS]: 14,
+    [SymbolType.CAN]: 13,
+
+    // High Pay Symbols (less common)
+    [SymbolType.SPARKY]: 8,
+    [SymbolType.ZIPPO]: 6,
+    [SymbolType.SQUIRT]: 4,
+
+    // Special
     [SymbolType.SCATTER]: 3,
   } as Record<SymbolType, number>,
   
-  // Free spins symbol weights
+  // Free spins symbol weights (more high-value symbols, with Doctor threat)
   FREE_SPINS_SYMBOL_WEIGHTS: {
-    [SymbolType.LOW1]: 15,
-    [SymbolType.LOW2]: 14,
-    [SymbolType.LOW3]: 13,
-    [SymbolType.MED1]: 12,
-    [SymbolType.MED2]: 11,
-    [SymbolType.HIGH1]: 10,
-    [SymbolType.HIGH2]: 8,
-    [SymbolType.DOCTOR]: 2,
+    [SymbolType.FISH]: 12,
+    [SymbolType.FINGER]: 11,
+    [SymbolType.NEEDLE]: 10,
+    [SymbolType.BAGGIE]: 10,
+    [SymbolType.PILLS]: 9,
+    [SymbolType.CAN]: 9,
+    [SymbolType.SPARKY]: 12,
+    [SymbolType.ZIPPO]: 10,
+    [SymbolType.SQUIRT]: 8,
+    [SymbolType.DOCTOR]: 2,  // The buzzkill - resets multipliers
   } as Record<SymbolType, number>,
 } as const;
